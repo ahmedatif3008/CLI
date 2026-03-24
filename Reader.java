@@ -58,6 +58,38 @@ class HashMaper {
     
     }
 
+    void remove(String site){ //implementing a dumb remove function for now O(n)
+        Node n;
+        boolean found = false;
+
+        for (int i = 0; i < capacity; i++){
+            // System.out.println(i);
+            n = hasher.get(i);
+            while (n.next != null) {
+
+                if (n.next.key.equals(site)){
+                    System.out.println("match found at "+ i);
+                    found = true;
+                    if (n.next.next == null){
+                        n.next = null;
+                    }
+                    else{
+                        n.next = n.next.next;
+                    }
+                    break;
+
+                }
+
+                n = n.next;
+            }
+        }
+
+        if (!found){
+            System.out.println("The site you mentioned has no password stored");
+        }
+
+    }
+
     String get(int counter){
         return hasher.get(0).next.value.toString();
     }
@@ -118,7 +150,7 @@ public class Reader {
         h.add("insta.com", "001");
         h.add("whatsapp.com", "002");
         h.add("youtube.com", "003");
-        h.add("twitch.com", "004");
+        // h.add("twitch.com", "004");
         h.add("spotify.com", "005");
         h.add("apple.com", "006");
         h.add("x.com", "007");
@@ -130,6 +162,13 @@ public class Reader {
         System.out.println(h.get(0));
         
         h.printHashMap();
+        h.remove("insta.com");
+        h.printHashMap();
+        h.remove("z.com");
+        h.remove("x.com");
+        h.remove("l.com");
+        h.printHashMap();
+
 
         // h.add("ahmed.com", "123");
         // System.out.println(h);
