@@ -41,8 +41,10 @@ class HashMaper {
     }
     
 
-    void add(String site, String pw){
-        Node n = hasher.get(counter%5);
+    void add(String site, String pw) {
+        
+        int currIndex = counter % 5;
+        Node n = hasher.get(currIndex);
 
         while (n.next != null){
             n = n.next;
@@ -50,9 +52,10 @@ class HashMaper {
         n.next = new Node(site, pw);
         
         // hasher.set(counter, new Node(site, pw));
-        hasher.get(counter).next.key = site;
-        hasher.get(counter).next.value = pw;
+        // hasher.get(currIndex).next.key = site;
+        // hasher.get(currIndex).next.value = pw;
         counter++;        
+    
     }
 
     String get(int counter){
@@ -60,6 +63,21 @@ class HashMaper {
     }
 
     void printHashMap(){
+        Node n;
+        for (int i = 0; i < capacity; i++){
+            n = hasher.get(i);
+
+            while (n != null){
+                // if (n.key.equals("")) {
+                //     System.out.print("[")
+                // }
+                System.out.print("[ " + n.key + " : " + n.value + " ] ->");
+                n = n.next;
+            }
+            System.out.println();
+
+
+        }
 
     }
 
@@ -103,7 +121,16 @@ public class Reader {
         h.add("twitch.com", "004");
         h.add("spotify.com", "005");
         h.add("apple.com", "006");
+        h.add("x.com", "007");
+        h.add("y.com", "008");
+        h.add("z.com", "009");
+        h.add("a.com", "010");
+        h.add("b.com", "011");
+        
         System.out.println(h.get(0));
+        
+        h.printHashMap();
+
         // h.add("ahmed.com", "123");
         // System.out.println(h);
 
