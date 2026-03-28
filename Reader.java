@@ -1,15 +1,18 @@
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner; 
-import java.io.File;       // Import the File class
+import java.io.File;  
 import java.io.FileWriter;
-import java.io.IOException; // Import IOException to handle errors
+import java.io.IOException; 
+import java.io.BufferedReader;
+import java.io.FileReader;
 
-// TODO: Implement HashMap class structure
-// implement add function
-// implement remove function
-// implement list function
-// implement hashing function
+// Implement the read from file and store to hashmap -- done
+// then format the terminal to look terminally
+// implement a hashing function
+
+//extra features: UI, persistant storage etc
+
 
 class Node{
 
@@ -90,8 +93,19 @@ class HashMaper {
 
     }
 
-    String get(int counter){
-        return hasher.get(0).next.value.toString();
+    String getPassword(String site){
+        Node n;
+        for (int i = 0; i < capacity; i++){
+            n = hasher.get(i);
+            while (n.next != null){
+                if (n.key.equals(site)){
+                    return n.value;
+                }
+                n = n.next;
+            }
+        }
+
+        return "no pw for this site";
     }
 
     void printHashMap(){
@@ -100,9 +114,6 @@ class HashMaper {
             n = hasher.get(i);
 
             while (n != null){
-                // if (n.key.equals("")) {
-                //     System.out.print("[")
-                // }
                 System.out.print("[ " + n.key + " : " + n.value + " ] ->");
                 n = n.next;
             }
@@ -146,33 +157,28 @@ public class Reader {
         }
         
         HashMaper h = new HashMaper();
-        h.add("facebook.com", "000");
-        h.add("insta.com", "001");
-        h.add("whatsapp.com", "002");
-        h.add("youtube.com", "003");
-        // h.add("twitch.com", "004");
-        h.add("spotify.com", "005");
-        h.add("apple.com", "006");
-        h.add("x.com", "007");
-        h.add("y.com", "008");
-        h.add("z.com", "009");
-        h.add("a.com", "010");
-        h.add("b.com", "011");
-        
-        System.out.println(h.get(0));
-        
-        h.printHashMap();
-        h.remove("insta.com");
-        h.printHashMap();
-        h.remove("z.com");
-        h.remove("x.com");
-        h.remove("l.com");
+
+
+
+        try (BufferedReader bf = new BufferedReader(new FileReader("filename.txt"))) {
+            String line = "";
+            String[] arr = {"", ""};
+
+            while ((line = bf.readLine()) != null){
+                
+                arr = line.split(" ");
+                h.add(arr[0], arr[1]);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+       
         h.printHashMap();
 
 
-        // h.add("ahmed.com", "123");
-        // System.out.println(h);
-
-
+        System.out.println(h.getPassword("facebook.com"));
+        System.out.println(h.getPassword("insta.com"));
+        System.out.println(h.getPassword("a.com"));
     }
 }
