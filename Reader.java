@@ -9,7 +9,7 @@ import java.io.FileReader;
 
 // Implement the read from file and store to hashmap -- done
 // then format the terminal to look terminally
-// implement a hashing function
+// implement a hashing function - test
 
 //extra features: UI, persistant storage etc
 
