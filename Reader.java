@@ -41,6 +41,8 @@ class HashMaper {
     int capacity = 5;
     ArrayList<Node> hasher = new ArrayList<>(capacity);
     int counter = 0;
+    Boolean decryptionKey = false;
+    String passwordEncryption = "0e16b481c14d28275d05907ae6a12964d66708cba3de9983ed8cdd8e568aca62";
 
     public HashMaper(){
         for (int i = 0; i < capacity; i++){
@@ -159,13 +161,35 @@ public class Reader {
         return null;
     }
 
+    public static void enablePasswordAccess(String pw, HashMaper h){
+        String enteredPasswordSHA = shaEncryption(pw);
+        // "==" uses reference equality and not value equality and thus was breaking
+
+        if (enteredPasswordSHA.equals(h.passwordEncryption)){
+            h.decryptionKey = true;
+            System.out.println("the passwords match!");
+        }
+        else {
+            System.out.println(enteredPasswordSHA +":::" +h.passwordEncryption);
+        }
+
+    }
+
     public static void main(String[] args) {
 
 
         Scanner scannerObject = new Scanner(System.in);
 
-        System.out.println("Ahmed's terminal");
+        System.out.println("Ahmed's PW terminal");
         String command = "";
+
+        System.out.println("Enter your system password");
+        String pw = scannerObject.next();
+        
+        HashMaper h = new HashMaper();
+        enablePasswordAccess(pw, h); // allow read permissions
+        System.out.println(h.decryptionKey);
+        
 
 
         try {
@@ -187,7 +211,7 @@ public class Reader {
             e.printStackTrace();
         }
         
-        HashMaper h = new HashMaper();
+        
 
 
 
@@ -204,13 +228,10 @@ public class Reader {
         } catch (Exception e) {
             e.printStackTrace();
         }
-       
+    
+
+
         h.printHashMap();
 
-
-        System.out.println(shaEncryption(h.getPassword("facebook.com")));
-        System.out.println(shaEncryption(h.getPassword("facebook.com")));
-        System.out.println(shaEncryption(h.getPassword("insta.com")));
-        System.out.println(shaEncryption(h.getPassword("a.com")));
     }
 }
