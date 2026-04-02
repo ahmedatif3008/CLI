@@ -7,6 +7,11 @@ import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 // Implement the read from file and store to hashmap -- done
 // then format the terminal to look terminally
 // implement a hashing function - test
@@ -128,6 +133,32 @@ class HashMaper {
 
 public class Reader {
 
+
+    public static String shaEncryption(String pw){
+        try {
+
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] digest = md.digest(pw.getBytes());
+            StringBuilder hexString = new StringBuilder();
+
+
+            for (byte b : digest) {
+                hexString.append(String.format("%02x", b));
+            }
+
+            // System.out.println("Original String: " + pw);
+            // System.out.println(hexString.toString());
+
+            return hexString.toString();
+
+        }
+        catch(NoSuchAlgorithmException e){
+            e.printStackTrace();
+        }
+        
+        return null;
+    }
+
     public static void main(String[] args) {
 
 
@@ -177,8 +208,9 @@ public class Reader {
         h.printHashMap();
 
 
-        System.out.println(h.getPassword("facebook.com"));
-        System.out.println(h.getPassword("insta.com"));
-        System.out.println(h.getPassword("a.com"));
+        System.out.println(shaEncryption(h.getPassword("facebook.com")));
+        System.out.println(shaEncryption(h.getPassword("facebook.com")));
+        System.out.println(shaEncryption(h.getPassword("insta.com")));
+        System.out.println(shaEncryption(h.getPassword("a.com")));
     }
 }
