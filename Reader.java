@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import map.HashMaper;
+import map.Node;
 
 import java.io.File;  
 import java.io.FileWriter;
@@ -15,11 +16,8 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import map.HashMaper;
-import map.Node;
-
 // then format the terminal to look terminally
-//extra features: UI, persistant storage etc
+//UI implementation
 
 
 
@@ -59,10 +57,6 @@ public class Reader {
 
         if (enteredPasswordSHA.equals(h.passwordEncryption)){
             h.decryptionKey = true;
-            System.out.println("the passwords match!");
-        }
-        else {
-            System.out.println(enteredPasswordSHA +":::" +h.passwordEncryption);
         }
 
     }
@@ -80,7 +74,39 @@ public class Reader {
         
         HashMaper h = new HashMaper();
         enablePasswordAccess(pw, h); // allow read permissions
-        System.out.println(h.decryptionKey);
+        
+        if (h.decryptionKey) {
+            System.out.println(""" 
+
+
+
+                
+                Welcome Ahmed!
+                This terminal can be used to store passwords or look up existing passwords :) !
+                Below are the functions this CLI accepts:
+
+                add <website> <password>  (adding a new password)
+                list                      (listing all passwords)
+                get <website>             (get the password for a site)
+                delete <website>          (delete an existing password)
+
+            """);
+        }
+        else {
+            try {
+                System.out.println("Wrong password, CLI will collapse");
+                System.out.println("Beep");
+                Thread.sleep(1000);
+                System.out.println("Beep");
+                Thread.sleep(1000);
+                System.out.println("Beep");
+                Thread.sleep(1000);
+            } catch (Exception e) {
+                Thread.currentThread().interrupt();
+            }
+
+            return;
+        }
         
 
 

@@ -95,4 +95,17 @@ public class HashMaper {
 
     }
 
+    public void list(){
+        Node n;
+        for (int i = 0; i < capacity; i++){
+            n = hasher.get(i);
+
+            while (n != null){
+                System.out.println( i + ") " + n.key + " : " + n.value);
+                n = n.next;
+            }
+
+        }
+    }
+
 }
